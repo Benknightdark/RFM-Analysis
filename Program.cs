@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using OfficeOpenXml;
@@ -22,12 +23,34 @@ namespace EComerceAnalysis {
                 Console.WriteLine ($"Cell B2 Border  : {firstSheet.Cells["F2"].Text}");
                 Console.WriteLine ($"Cell B2 Border  : {firstSheet.Cells["G2"].Text}");
                 Console.WriteLine ($"Cell B2 Border  : {firstSheet.Cells["H2"].Text}");
-
+                Console.WriteLine (firstSheet.Dimension.Rows);
                 Console.WriteLine ("");
-                var d = DateTime.Parse (firstSheet.Cells["E2"].Text);
-                Console.WriteLine (d);
-                Console.WriteLine (float.Parse (firstSheet.Cells["D2"].Text));
-                Console.WriteLine (float.Parse (firstSheet.Cells["F2"].Text));
+                var list = new List<FundraiserStudentListModel> ();
+                for (int i = 2; i <= firstSheet.Dimension.Rows; i++) {
+                    // Console.WriteLine (firstSheet.Cells["A" + i].Text);
+                    // Console.WriteLine (firstSheet.Cells["B" + i].Text);
+                    // Console.WriteLine (firstSheet.Cells["C" + i].Text);
+                    // Console.WriteLine (float.Parse (firstSheet.Cells["D" + i].Text));
+                    // Console.WriteLine (DateTime.Parse (firstSheet.Cells["E" + i].Text));
+                    // Console.WriteLine (float.Parse (firstSheet.Cells["F" + i].Text));
+                    // Console.WriteLine (firstSheet.Cells["G" + i].Text);
+                    // Console.WriteLine (firstSheet.Cells["H" + i].Text);
+                    list.Add (new FundraiserStudentListModel () {
+                        InvoiceNo = firstSheet.Cells["A" + i].Text,
+                            StockCode = firstSheet.Cells["B" + i].Text,
+                            Description = firstSheet.Cells["C" + i].Text,
+
+                            Quantity = float.Parse (firstSheet.Cells["D" + i].Text),
+
+                            InvoiceDate =DateTime.Parse (firstSheet.Cells["E" + i].Text) ,
+
+                            UnitPrice = float.Parse (firstSheet.Cells["F" + i].Text),
+
+                            CustomerID = firstSheet.Cells["G" + i].Text,
+                            Country = firstSheet.Cells["H" + i].Text,
+                    });
+                }
+                Console.WriteLine("dfdsfdsf=>",list.Count());
 
             }
         }
